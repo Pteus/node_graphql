@@ -55,6 +55,15 @@ const resolvers = {
       db.games.push(game);
       return game;
     },
+    updateGame(_, args) {
+      db.games = db.games.map((game) => {
+        if (game.id === args.id) {
+          return { ...game, ...args.edits }; // overrides with the edits fields
+        }
+        return game;
+      });
+      return db.games.find((game) => game.id === args.id);
+    },
   },
 };
 
